@@ -3,8 +3,9 @@ defmodule WhTest do
   doctest Wh
 
   test "greets the world" do
-    Wh.start_link
+    {:ok, pid} = Wh.start_link
+    Process.unlink(pid)
 
-    assert Wormhole.capture(fn -> Wh.throw end) == ""
+    assert Wormhole.capture(fn -> Wh.raise end, stacktrace: true) == ""
   end
 end
